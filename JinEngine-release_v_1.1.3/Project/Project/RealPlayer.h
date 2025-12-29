@@ -1,28 +1,20 @@
 #pragma once
-#include <GameState.h>
+#include "ObjectManager.h"
+#include "Engine.h"
 
-#include "RealPlayer.h"
-
-class MainGame : public GameState
+class RealPlayer : public GameObject
 {
 public:
-    void Load(const EngineContext& engineContext) override;
-
     void Init(const EngineContext& engineContext) override;
-
     void LateInit(const EngineContext& engineContext) override;
-
     void Update(float dt, const EngineContext& engineContext) override;
-
-    void LateUpdate(float dt, const EngineContext& engineContext) override;
-
     void Draw(const EngineContext& engineContext) override;
-
     void Free(const EngineContext& engineContext) override;
-
-    void Unload(const EngineContext& engineContext) override;
-
+    void LateFree(const EngineContext& engineContext) override;
+    void OnCollision(Object* other) override;
+    bool CheckIdle();
 private:
-
-    RealPlayer* player;
+    bool checkIdle = true;
+    bool checkIdle_prevFrame = false;
 };
+
