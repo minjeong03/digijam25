@@ -7,8 +7,10 @@ void RealPlayer::Init(const EngineContext& engineContext)
     SetMesh(engineContext, "[EngineMesh]default");
     SetMaterial(engineContext, "[Material]Animation");
     SpriteSheet* sheet = engineContext.renderManager->GetSpriteSheetByTag("[SpriteSheet]MainCharacter");
-    sheet->AddClip("[Clip]Idle", { 0,1 }, 0.15f, true);
-    sheet->AddClip("[Clip]Running", {16,17,18,19}, 0.08f, true);
+    sheet->AddClip("[Clip]IdleFront", { 0,1 }, 0.15f, true);
+    sheet->AddClip("[Clip]RunningRight", {16,17,18,19}, 0.08f, true);
+    sheet->AddClip("[Clip]RunningFront", { 12,13,14,15 }, 0.08f, true);
+    sheet->AddClip("[Clip]RunningBack", { 20, 21, 22 ,23 }, 0.08f, true);
     AttachAnimator(sheet, 0.08f);
     auto collider = std::make_unique<AABBCollider>(this, glm::vec2(1.0, 1.0));
     collider->SetUseTransformScale(false);
@@ -26,8 +28,10 @@ void RealPlayer::LateInit(const EngineContext& engineContext)
 void RealPlayer::Update(float dt, const EngineContext& engineContext)
 {
  
+    //TODO : 대각선 이동속도 변경
 
     checkIdle = true;
+
     if (engineContext.inputManager->IsKeyDown(KEY_A))
     {
         checkIdle = false;
@@ -41,21 +45,49 @@ void RealPlayer::Update(float dt, const EngineContext& engineContext)
         transform2D.AddPosition(glm::vec2(350 * dt, 0));
     }
 
+    if (engineContext.inputManager->IsKeyDown(KEY_W))
+    {
+        checkIdle = false;
+        checkIdle_prevFrame = false;
+        transform2D.AddPosition(glm::vec2(0, 350 * dt));
+    }
+    if (engineContext.inputManager->IsKeyDown(KEY_S))
+    {
+        checkIdle = false;
+        checkIdle_prevFrame = false;
+        transform2D.AddPosition(glm::vec2(0, -350 * dt));
+    }
+
+
+
     if (spriteAnimator && engineContext.inputManager->IsKeyPressed(KEY_A))
     {
         SetFlipUV_X(true);
-        spriteAnimator->PlayClip("[Clip]Running");
+        spriteAnimator->PlayClip("[Clip]RunningRight");
     }
     if (spriteAnimator && engineContext.inputManager->IsKeyPressed(KEY_D))
     {
         SetFlipUV_X(false);
-        spriteAnimator->PlayClip("[Clip]Running");
+        spriteAnimator->PlayClip("[Clip]RunningRight");
     }
+
+    if (spriteAnimator && engineContext.inputManager->IsKeyPressed(KEY_W))
+    {
+  
+        spriteAnimator->PlayClip("[Clip]RunningBack");
+    }
+    if (spriteAnimator && engineContext.inputManager->IsKeyPressed(KEY_S))
+    {
+
+        spriteAnimator->PlayClip("[Clip]RunningFront");
+    }
+
+
 
     if (spriteAnimator && checkIdle && !checkIdle_prevFrame)
     {
         checkIdle_prevFrame = true;
-        spriteAnimator->PlayClip("[Clip]Idle");
+        spriteAnimator->PlayClip("[Clip]IdleFront");
     }
 
 }
