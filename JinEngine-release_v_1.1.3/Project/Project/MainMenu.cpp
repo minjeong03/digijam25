@@ -5,6 +5,7 @@
 #include "Debug.h"
 #include "LoadingState.h"
 #include "Tutorial.h"
+#include "MainGame.h"
 
 void MainMenu::Load(const EngineContext& engineContext)
 {
@@ -43,7 +44,7 @@ void MainMenu::Update(float dt, const EngineContext& engineContext)
     }
     if (engineContext.inputManager->IsKeyReleased(KEY_N))
     {
-        auto nextFactory = []() -> std::unique_ptr<GameState>
+        /*auto nextFactory = []() -> std::unique_ptr<GameState>
             {
                 return std::make_unique<Tutorial>();
             };
@@ -52,7 +53,8 @@ void MainMenu::Update(float dt, const EngineContext& engineContext)
 
         TutorialState::AsyncLoad(engineContext, loading.get());
 
-        engineContext.stateManager->ChangeState(std::move(loading));
+        engineContext.stateManager->ChangeState(std::move(loading));*/
+        engineContext.stateManager->ChangeState(std::make_unique<MainGame>());
     }
     objectManager.UpdateAll(dt, engineContext);
 

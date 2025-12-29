@@ -396,11 +396,11 @@ void Tutorial::Update(float dt, const EngineContext& engineContext)
     }
     if (engineContext.inputManager->IsKeyDown(KEY_DOWN))
     {
-        cameraManager.GetActiveCamera()->SetZoom({ cameraManager.GetActiveCamera()->GetZoom() -5 * dt });
+        //cameraManager.GetActiveCamera()->SetZoom({ cameraManager.GetActiveCamera()->GetZoom() -5 * dt });
     }
     if (engineContext.inputManager->IsKeyDown(KEY_UP))
     {
-        cameraManager.GetActiveCamera()->SetZoom({ cameraManager.GetActiveCamera()->GetZoom() + 5 * dt });
+        //cameraManager.GetActiveCamera()->SetZoom({ cameraManager.GetActiveCamera()->GetZoom() + 5 * dt });
     }
     if (engineContext.inputManager->IsKeyDown(KEY_ESCAPE))
     {

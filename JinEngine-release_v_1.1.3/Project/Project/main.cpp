@@ -38,8 +38,8 @@ int main(int argc, char* argv[])
         JIN_ERR("Engine initialization failed.");
         return -1;
     }
-    jinEngine.RenderDebugDraws(false);
-   // jinEngine.GetEngineContext().windowManager->RestrictResizing(true);
+    jinEngine.RenderDebugDraws(true);
+   //jinEngine.GetEngineContext().windowManager->RestrictResizing(true);
 
 
     jinEngine.GetEngineContext().renderManager->RegisterMesh(
