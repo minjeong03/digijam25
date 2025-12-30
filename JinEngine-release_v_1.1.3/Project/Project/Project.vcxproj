@@ -176,7 +176,7 @@
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)JinEngine\public;$(SolutionDir)JinEngine\ThirdParty\Include</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -222,7 +222,7 @@
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)JinEngine\public;$(SolutionDir)JinEngine\ThirdParty\Include</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -233,6 +233,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackgroundObject.cpp" />
+    <ClCompile Include="BulletObject.cpp" />
     <ClCompile Include="CustomLoadingState.cpp" />
     <ClCompile Include="FlagObject.cpp" />
     <ClCompile Include="InstancedObject.cpp" />
@@ -240,6 +241,7 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RealPlayer.cpp" />
     <ClCompile Include="Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -249,12 +251,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackgroundObject.h" />
+    <ClInclude Include="BulletObject.h" />
     <ClInclude Include="CustomLoadingState.h" />
     <ClInclude Include="FlagObject.h" />
     <ClInclude Include="InstancedObject.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RealPlayer.h" />
     <ClInclude Include="Tutorial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

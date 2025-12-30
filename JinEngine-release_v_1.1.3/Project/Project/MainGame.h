@@ -1,6 +1,8 @@
 #pragma once
 #include <GameState.h>
 
+#include "RealPlayer.h"
+
 class MainGame : public GameState
 {
 public:
@@ -22,4 +24,5 @@ public:
 
 private:
 
+    RealPlayer* player;
 };
