@@ -66,11 +66,14 @@ void BulletSpawnerObject::SpawnBullets(const EngineContext& engineContext) const
 		numBulletsToSpawn = (config.EndAngle - config.StartAngle) / config.PatternAngleSpacing;
 		currAngle = config.StartAngle * rad;
 	}
-	 
+
 	for (int i = 0; i < numBulletsToSpawn; ++i)
 	{
-		float dirX = std::cos(currAngle);
-		float dirY = std::sin(currAngle);
+		float valueX = ((float)std::rand() / RAND_MAX) * 2.0f * config.AngleVariance - config.AngleVariance;
+		float valueY = ((float)std::rand() / RAND_MAX) * 2.0f * config.AngleVariance - config.AngleVariance;
+
+		float dirX = std::cos(currAngle + valueX * rad);
+		float dirY = std::sin(currAngle + valueY * rad);
 		std::string word = wordlist.GetRandomWord();
 		GameObjectUtils::CreateBulletObject(om, config.InitPos + config.CircleRadius * glm::vec2(dirX, dirY), glm::vec2(32, 32), glm::vec2(dirX, dirY), word);
 		currAngle += patternAngleSpacingRadian;
