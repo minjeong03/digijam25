@@ -70,3 +70,10 @@ void BulletObject::OnCollision(Object* other)
 		soundManager->Play("[Sound]OuchSound");
 	}
 }
+
+void BulletObject::SetWord(const std::string& word)
+{
+	BulletText = word;
+	if (BulletTextObject)
+		BulletTextObject->SetText(word);
+}

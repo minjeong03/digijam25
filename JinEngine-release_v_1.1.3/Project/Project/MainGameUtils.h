@@ -9,7 +9,7 @@ class BulletSpawnerObject;
 
 namespace GameObjectUtils
 {
-	BulletObject* CreateBulletObject(ObjectManager& om, const glm::vec2& pos, const glm::vec2 scale, const glm::vec2& dir);
+	BulletObject* CreateBulletObject(ObjectManager& om, const glm::vec2& pos, const glm::vec2 scale, const glm::vec2& dir, const std::string&  word);
 
 	BulletSpawnerObject* CreateBulletSpawnerObject(ObjectManager& om, const BulletSpawnConfig& config);
 }

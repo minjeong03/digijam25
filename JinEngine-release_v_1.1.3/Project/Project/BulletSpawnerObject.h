@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "BulletSpawnConfig.h"
+#include "WordList.h"
 
 class BulletSpawnerObject : public GameObject
 {
@@ -23,6 +24,7 @@ private:
     float spawnTimer;
     bool activated;
     
+    WordList wordlist;
 
 
     void SpawnBullets(const EngineContext& engineContext) const;

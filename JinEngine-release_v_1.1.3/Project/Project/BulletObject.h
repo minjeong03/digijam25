@@ -14,11 +14,11 @@ public:
     void Free(const EngineContext& engineContext) override;
     void LateFree(const EngineContext& engineContext) override;
     void OnCollision(Object* other) override;
-
+    void SetWord(const std::string& word);
 private:
     class SoundManager* soundManager;
     TextObject* BulletTextObject;
-    std::string BulletText = u8"¾È³çÇÏ¼¼¿ä";
+    std::string BulletText = u8"ì•ˆë…•í•˜ì„¸ìš”";
     float BulletActiveTimer = 0.0f;
     float BulletActiveTime = 1.0f;
     float Speed = 50;

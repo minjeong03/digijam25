@@ -245,6 +245,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RealPlayer.cpp" />
     <ClCompile Include="Tutorial.cpp" />
+    <ClCompile Include="WordList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JinEngine\JinEngine.vcxproj">
@@ -265,6 +266,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RealPlayer.h" />
     <ClInclude Include="Tutorial.h" />
+    <ClInclude Include="WordList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

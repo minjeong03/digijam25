@@ -3,6 +3,7 @@
 #include "ObjectManager.h"
 #include "MainGameUtils.h"
 
+
 BulletSpawnerObject::BulletSpawnerObject(const BulletSpawnConfig& config_)
 	:config(config_)
 {
@@ -15,6 +16,7 @@ void BulletSpawnerObject::Init(const EngineContext& engineContext)
 	delayTimer = 0;
 	spawnTimer = 0;
 	activated = false;
+	wordlist = CreateWordList(config.WordDataFilepath);
 }
 
 void BulletSpawnerObject::LateInit(const EngineContext& engineContext)
@@ -64,12 +66,13 @@ void BulletSpawnerObject::SpawnBullets(const EngineContext& engineContext) const
 		numBulletsToSpawn = (config.EndAngle - config.StartAngle) / config.PatternAngleSpacing;
 		currAngle = config.StartAngle * rad;
 	}
-
+	 
 	for (int i = 0; i < numBulletsToSpawn; ++i)
 	{
 		float dirX = std::cos(currAngle);
 		float dirY = std::sin(currAngle);
-		GameObjectUtils::CreateBulletObject(om, config.InitPos + config.CircleRadius * glm::vec2(dirX, dirY), glm::vec2(32, 32), glm::vec2(dirX, dirY));
+		std::string word = wordlist.GetRandomWord();
+		GameObjectUtils::CreateBulletObject(om, config.InitPos + config.CircleRadius * glm::vec2(dirX, dirY), glm::vec2(32, 32), glm::vec2(dirX, dirY), word);
 		currAngle += patternAngleSpacingRadian;
 	}
 }

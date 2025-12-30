@@ -1,6 +1,7 @@
 #pragma once
 #include <glm.hpp>
 
+
 struct BulletSpawnConfig
 {
     glm::vec2 InitPos;
@@ -12,4 +13,7 @@ struct BulletSpawnConfig
     float Lifetime = 0.0f; // life time in sec after activation
     float StartAngle = 0.0f; // degree
     float EndAngle = 0.0f; // degree
+    std::string WordDataFilepath;
+
+
 };

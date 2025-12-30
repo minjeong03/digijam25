@@ -25,8 +25,6 @@ void MainGame::Init(const EngineContext& engineContext)
 	player->GetTransform2D().SetDepth(00.0f);
 	player->GetTransform2D().SetPosition(glm::vec2(0, 0));
 
-	GameObjectUtils::CreateBulletObject(objectManager, glm::vec2(0, 0), glm::vec2(32, 32), glm::vec2(1, 0));
-
 	engineContext.soundManager->Play("[Sound]MainGameBGM", 1, 0);
 
 	engineContext.windowManager->SetCursorVisible(true);
@@ -48,7 +46,8 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 		config.Lifetime = 10;
 		config.PatternAngleSpacing = 30;
 		config.SpawnInterval = 1;
-		config.AngleVariance = 2;
+		config.AngleVariance = 10;
+		config.WordDataFilepath = "data/Wordlist.txt";
 		GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
 		engineContext.soundManager->Play("[Sound]ClickSound");
 	}
@@ -66,6 +65,7 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 		config.AngleVariance = 2;
 		config.StartAngle = 210;
 		config.EndAngle = 301;
+		config.WordDataFilepath = "data/Wordlist2.txt"; 
 		GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
 		engineContext.soundManager->Play("[Sound]ClickSound");
 	}
