@@ -2,6 +2,7 @@
 #include <GameState.h>
 
 #include "RealPlayer.h"
+#include "BulletSpawnConfig.h"
 
 class MainGame : public GameState
 {
@@ -22,7 +23,9 @@ public:
 
     void Unload(const EngineContext& engineContext) override;
 
+    void LoadConfigFromFile();
 private:
-
+    BulletSpawnConfig configLoadedFromFile;
     RealPlayer* player;
+    float elapsedTime;
 };

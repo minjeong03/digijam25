@@ -1,0 +1,7 @@
+CircleRadius 50
+Delay 1
+Lifetime 5
+PatternAngleSpacing 25
+SpawnInterval 0.8
+AngleVariance 0
+WordDataFilepath data/Noun.txt
