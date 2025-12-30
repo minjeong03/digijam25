@@ -52,24 +52,25 @@ void BulletSpawnerObject::Update(float dt, const EngineContext& engineContext)
 
 void BulletSpawnerObject::SpawnBullets(const EngineContext& engineContext) const
 {
+	const float rad = (6.28318530717958647693f / 360.f);
 	ObjectManager& om = engineContext.stateManager->GetCurrentState()->GetObjectManager();
 
-	if (config.StartAngle == config.EndAngle)
-	{
-		int numBulletsToSpawn = 360.0f / config.PatternAngleSpacing;
-		float patternAngleSpacingRadian = config.PatternAngleSpacing * (6.28318530717958647693f /360.f);
-		float currAngle = 0;
-		for (int i = 0; i < numBulletsToSpawn; ++i)
-		{
-			float x = config.CircleRadius * std::cos(currAngle);
-			float y = config.CircleRadius * std::sin(currAngle);
-			GameObjectUtils::CreateBulletObject(om, glm::vec2(x, y), glm::vec2(32, 32));
-			currAngle += patternAngleSpacingRadian;
-		}
-	}
-	else
-	{
+	int numBulletsToSpawn = 360.0f / config.PatternAngleSpacing;
+	float currAngle = 0;
+	const float patternAngleSpacingRadian = config.PatternAngleSpacing * rad;
 
+	if (config.StartAngle < config.EndAngle)
+	{
+		numBulletsToSpawn = (config.EndAngle - config.StartAngle) / config.PatternAngleSpacing;
+		currAngle = config.StartAngle * rad;
+	}
+
+	for (int i = 0; i < numBulletsToSpawn; ++i)
+	{
+		float dirX = std::cos(currAngle);
+		float dirY = std::sin(currAngle);
+		GameObjectUtils::CreateBulletObject(om, config.CircleRadius * glm::vec2(dirX, dirY), glm::vec2(32, 32), glm::vec2(dirX, dirY));
+		currAngle += patternAngleSpacingRadian;
 	}
 }
 

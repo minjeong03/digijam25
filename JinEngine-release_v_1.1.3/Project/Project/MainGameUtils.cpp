@@ -4,9 +4,9 @@
 
 namespace GameObjectUtils
 {
-	BulletObject* CreateBulletObject(ObjectManager& om, const glm::vec2& pos, const glm::vec2 scale)
+	BulletObject* CreateBulletObject(ObjectManager& om, const glm::vec2& pos, const glm::vec2 scale, const glm::vec2& dir)
 	{
-		std::unique_ptr<BulletObject> Bullet = std::make_unique<BulletObject>();
+		std::unique_ptr<BulletObject> Bullet = std::make_unique<BulletObject>(dir);
 		BulletObject* BulletPtr = Bullet.get();
 		Bullet->SetRenderLayer("[Layer]Player");
 		Bullet->GetTransform2D().SetDepth(00.0f);

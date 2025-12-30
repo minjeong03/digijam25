@@ -5,6 +5,8 @@
 class BulletObject : public GameObject
 {
 public:
+    BulletObject(const glm::vec2& Dir);
+
     void Init(const EngineContext& engineContext) override;
     void LateInit(const EngineContext& engineContext) override;
     void Update(float dt, const EngineContext& engineContext) override;
@@ -20,4 +22,5 @@ private:
     float BulletActiveTimer = 0.0f;
     float BulletActiveTime = 1.0f;
     float Speed = 50;
+    glm::vec2 Direction;
 };

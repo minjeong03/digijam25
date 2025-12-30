@@ -1,5 +1,9 @@
 ﻿#include "BulletObject.h"
 #include "Engine.h"
+BulletObject::BulletObject(const glm::vec2& Dir)
+	: Direction(Dir)
+{
+}
 void BulletObject::Init(const EngineContext& engineContext)
 {
 	soundManager = engineContext.soundManager;
@@ -34,7 +38,7 @@ void BulletObject::Update(float dt, const EngineContext& engineContext)
 	
 	if (BulletActiveTimer >= BulletActiveTime)
 	{
-		transform2D.AddPosition(glm::vec2(-Speed * dt, Speed * dt));
+		transform2D.AddPosition(Direction * Speed * dt);
 		BulletTextObject->GetTransform2D().SetPosition(GetWorldPosition());
 	}
 

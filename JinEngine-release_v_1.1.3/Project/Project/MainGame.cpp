@@ -25,7 +25,7 @@ void MainGame::Init(const EngineContext& engineContext)
 	player->GetTransform2D().SetDepth(00.0f);
 	player->GetTransform2D().SetPosition(glm::vec2(0, 0));
 
-	GameObjectUtils::CreateBulletObject(objectManager, glm::vec2(0, 0), glm::vec2(32, 32));
+	GameObjectUtils::CreateBulletObject(objectManager, glm::vec2(0, 0), glm::vec2(32, 32), glm::vec2(1, 0));
 
 	engineContext.soundManager->Play("[Sound]MainGameBGM", 1, 0);
 }
@@ -36,7 +36,7 @@ void MainGame::LateInit(const EngineContext& engineContext)
 
 void MainGame::Update(float dt, const EngineContext& engineContext)
 {
-	if (engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) || engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+	if (engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 	{
 		glm::vec2 mouseWorldPos = engineContext.inputManager->GetMouseWorldPos(GetActiveCamera());
 		BulletSpawnConfig config;
@@ -47,6 +47,23 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 		config.PatternAngleSpacing = 30;
 		config.SpawnInterval = 1;
 		config.AngleVariance = 2;
+		GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
+		engineContext.soundManager->Play("[Sound]ClickSound");
+	}
+	
+	if (engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+	{
+		glm::vec2 mouseWorldPos = engineContext.inputManager->GetMouseWorldPos(GetActiveCamera());
+		BulletSpawnConfig config;
+		config.InitPos = mouseWorldPos;
+		config.CircleRadius = 50;
+		config.Delay = 3;
+		config.Lifetime = 10;
+		config.PatternAngleSpacing = 30;
+		config.SpawnInterval = 1;
+		config.AngleVariance = 2;
+		config.StartAngle = 210;
+		config.EndAngle = 301;
 		GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
 		engineContext.soundManager->Play("[Sound]ClickSound");
 	}
