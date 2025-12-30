@@ -16,11 +16,14 @@ public:
     void OnCollision(Object* other) override;
 
 private:
+
     BulletSpawnConfig config;
     float lifetimeTimer;
     float delayTimer;
     float spawnTimer;
     bool activated;
+    
+
 
     void SpawnBullets(const EngineContext& engineContext) const;
 };

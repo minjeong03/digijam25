@@ -28,6 +28,8 @@ void MainGame::Init(const EngineContext& engineContext)
 	GameObjectUtils::CreateBulletObject(objectManager, glm::vec2(0, 0), glm::vec2(32, 32), glm::vec2(1, 0));
 
 	engineContext.soundManager->Play("[Sound]MainGameBGM", 1, 0);
+
+	engineContext.windowManager->SetCursorVisible(true);
 }
 
 void MainGame::LateInit(const EngineContext& engineContext)

@@ -69,7 +69,7 @@ void BulletSpawnerObject::SpawnBullets(const EngineContext& engineContext) const
 	{
 		float dirX = std::cos(currAngle);
 		float dirY = std::sin(currAngle);
-		GameObjectUtils::CreateBulletObject(om, config.CircleRadius * glm::vec2(dirX, dirY), glm::vec2(32, 32), glm::vec2(dirX, dirY));
+		GameObjectUtils::CreateBulletObject(om, config.InitPos + config.CircleRadius * glm::vec2(dirX, dirY), glm::vec2(32, 32), glm::vec2(dirX, dirY));
 		currAngle += patternAngleSpacingRadian;
 	}
 }
