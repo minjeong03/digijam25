@@ -14,7 +14,7 @@ public:
     void OnCollision(Object* other) override;
 
 private:
-  
+    class SoundManager* soundManager;
     TextObject* BulletTextObject;
     std::string BulletText = u8"æ»≥Á«œººø‰";
     float BulletActiveTimer = 0.0f;

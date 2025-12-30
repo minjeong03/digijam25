@@ -11,6 +11,11 @@ void MainGame::Load(const EngineContext& engineContext)
 	rm->RegisterTexture("[Texture]BulletBackground", "Textures/leaf.png"); 
 	rm->RegisterMaterial("[Material]Bullet", "[EngineShader]default_texture", { {"u_Texture","[Texture]BulletBackground"} });
 
+
+	SoundManager* sm = engineContext.soundManager;
+	sm->LoadSound("[Sound]MainGameBGM", "Sounds/test.mp3");
+	sm->LoadSound("[Sound]OuchSound", "Sounds/8bitsound.wav");
+	sm->LoadSound("[Sound]ClickSound", "Sounds/poka.mp3");
 }
 
 void MainGame::Init(const EngineContext& engineContext)
@@ -29,7 +34,7 @@ void MainGame::Init(const EngineContext& engineContext)
 	LocalBullet->GetTransform2D().SetScale(glm::vec2(32, 32));
 	LocalBullet->GetTransform2D().SetPosition(glm::vec2(0, 0));
 
-
+	engineContext.soundManager->Play("[Sound]MainGameBGM", 1, 0);
 
 
 }

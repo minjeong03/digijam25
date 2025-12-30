@@ -2,6 +2,8 @@
 #include "Engine.h"
 void BulletObject::Init(const EngineContext& engineContext)
 {
+	soundManager = engineContext.soundManager;
+
 	SetMesh(engineContext, "[EngineMesh]default");
 	SetMaterial(engineContext, "[Material]Bullet");
 
@@ -36,6 +38,12 @@ void BulletObject::Update(float dt, const EngineContext& engineContext)
 		BulletTextObject->GetTransform2D().SetPosition(GetWorldPosition());
 	}
 
+
+
+	if (engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) || engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+	{
+		soundManager->Play("[Sound]ClickSound");
+	}
 }
 
 void BulletObject::Draw(const EngineContext& engineContext)
@@ -57,9 +65,10 @@ void BulletObject::OnCollision(Object* other)
 {
 	if (other->GetTag()=="[Object]player")
 	{
+		
 		BulletTextObject->Kill();
 		Kill();
 
-
+		soundManager->Play("[Sound]OuchSound");
 	}
 }
