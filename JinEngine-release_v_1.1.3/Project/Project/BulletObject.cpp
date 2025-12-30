@@ -32,18 +32,12 @@ void BulletObject::Update(float dt, const EngineContext& engineContext)
 {
 	BulletActiveTimer += dt;
 	
-	if (BulletActiveTimer >= 3.0f)
+	if (BulletActiveTimer >= BulletActiveTime)
 	{
-		transform2D.AddPosition(glm::vec2(-10 * dt, 10 * dt));
+		transform2D.AddPosition(glm::vec2(-Speed * dt, Speed * dt));
 		BulletTextObject->GetTransform2D().SetPosition(GetWorldPosition());
 	}
 
-
-
-	if (engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE) || engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
-	{
-		soundManager->Play("[Sound]ClickSound");
-	}
 }
 
 void BulletObject::Draw(const EngineContext& engineContext)

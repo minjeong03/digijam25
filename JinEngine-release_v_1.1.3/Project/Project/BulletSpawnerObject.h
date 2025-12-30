@@ -1,10 +1,12 @@
 #pragma once
 #include "GameObject.h"
-#include "TextObject.h"
+#include "BulletSpawnConfig.h"
 
-class BulletObject : public GameObject
+class BulletSpawnerObject : public GameObject
 {
 public:
+    BulletSpawnerObject(const BulletSpawnConfig& config);
+
     void Init(const EngineContext& engineContext) override;
     void LateInit(const EngineContext& engineContext) override;
     void Update(float dt, const EngineContext& engineContext) override;
@@ -14,10 +16,11 @@ public:
     void OnCollision(Object* other) override;
 
 private:
-    class SoundManager* soundManager;
-    TextObject* BulletTextObject;
-    std::string BulletText = u8"æ»≥Á«œººø‰";
-    float BulletActiveTimer = 0.0f;
-    float BulletActiveTime = 1.0f;
-    float Speed = 50;
+    BulletSpawnConfig config;
+    float lifetimeTimer;
+    float delayTimer;
+    float spawnTimer;
+    bool activated;
+
+    void SpawnBullets(const EngineContext& engineContext) const;
 };

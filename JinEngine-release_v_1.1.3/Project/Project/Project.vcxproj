@@ -234,11 +234,13 @@
   <ItemGroup>
     <ClCompile Include="BackgroundObject.cpp" />
     <ClCompile Include="BulletObject.cpp" />
+    <ClCompile Include="BulletSpawnerObject.cpp" />
     <ClCompile Include="CustomLoadingState.cpp" />
     <ClCompile Include="FlagObject.cpp" />
     <ClCompile Include="InstancedObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MainGameUtils.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RealPlayer.cpp" />
@@ -252,10 +254,13 @@
   <ItemGroup>
     <ClInclude Include="BackgroundObject.h" />
     <ClInclude Include="BulletObject.h" />
+    <ClInclude Include="BulletSpawnConfig.h" />
+    <ClInclude Include="BulletSpawnerObject.h" />
     <ClInclude Include="CustomLoadingState.h" />
     <ClInclude Include="FlagObject.h" />
     <ClInclude Include="InstancedObject.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MainGameUtils.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RealPlayer.h" />
