@@ -11,6 +11,14 @@ void BulletObject::Init(const EngineContext& engineContext)
 	collider->SetOffset({ glm::vec2(-15,-5.f) });
 	SetCollider(std::move(collider));
 	SetCollision(engineContext.stateManager->GetCurrentState()->GetObjectManager(), "[CollisionTag]flag", { "[CollisionTag]player" });
+
+
+	BulletTextObject = static_cast<TextObject*>(engineContext.stateManager->GetCurrentState()->GetObjectManager().AddObject(
+std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]default"), BulletText, TextAlignH::Center, TextAlignV::Middle),
+		"[Object]flagText"));
+	BulletTextObject->SetRenderLayer("[Layer]UIText");
+	BulletTextObject->GetTransform2D().SetPosition(GetWorldPosition());
+	BulletTextObject->GetTransform2D().SetScale({ 0.3f,0.3f });
 }
 
 void BulletObject::LateInit(const EngineContext& engineContext)
@@ -25,6 +33,7 @@ void BulletObject::Update(float dt, const EngineContext& engineContext)
 	if (BulletActiveTimer >= 3.0f)
 	{
 		transform2D.AddPosition(glm::vec2(-10 * dt, 10 * dt));
+		BulletTextObject->GetTransform2D().SetPosition(GetWorldPosition());
 	}
 
 }
@@ -48,6 +57,9 @@ void BulletObject::OnCollision(Object* other)
 {
 	if (other->GetTag()=="[Object]player")
 	{
-		
+		BulletTextObject->Kill();
+		Kill();
+
+
 	}
 }

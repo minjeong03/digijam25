@@ -4,6 +4,7 @@
 void RealPlayer::Init(const EngineContext& engineContext)
 {
     transform2D.SetScale(glm::vec2(100.f));
+    transform2D.SetPosition(glm::vec2(-300, 0));
     SetMesh(engineContext, "[EngineMesh]default");
     SetMaterial(engineContext, "[Material]Animation");
     SpriteSheet* sheet = engineContext.renderManager->GetSpriteSheetByTag("[SpriteSheet]MainCharacter");
