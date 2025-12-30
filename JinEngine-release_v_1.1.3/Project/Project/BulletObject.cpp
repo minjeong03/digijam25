@@ -23,7 +23,8 @@ std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]de
 	collider->SetUseTransformScale(false);
 	collider->SetSize(BulletTextObject->GetWorldScale());
 	SetCollider(std::move(collider));
-	SetCollision(engineContext.stateManager->GetCurrentState()->GetObjectManager(), "[CollisionTag]flag", { "[CollisionTag]player" });
+	SetCollision(engineContext.stateManager->GetCurrentState()->GetObjectManager(), 
+		"[CollisionTag]bullet", { "[CollisionTag]player", "[CollisionTag]wall"});
 
 }
 
@@ -61,12 +62,18 @@ void BulletObject::LateFree(const EngineContext& engineContext)
 
 void BulletObject::OnCollision(Object* other)
 {
-	if (other->GetTag()=="[Object]player")
+	if (other->GetTag() == "[Object]player")
 	{
 		BulletTextObject->Kill();
 		Kill();
 
 		soundManager->Play("[Sound]OuchSound");
+	}
+	else if (other->GetTag() == "[Object]wall")
+	{
+
+		BulletTextObject->Kill();
+		Kill();
 	}
 }
 

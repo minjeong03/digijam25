@@ -1,6 +1,7 @@
 #include "MainGame.h"
 #include "BulletObject.h"
 #include "MainGameUtils.h"
+#include "WallObject.h"
 
 void MainGame::Load(const EngineContext& engineContext)
 {
@@ -28,6 +29,31 @@ void MainGame::Init(const EngineContext& engineContext)
 	engineContext.soundManager->Play("[Sound]MainGameBGM", 1, 0);
 
 	engineContext.windowManager->SetCursorVisible(true);
+
+
+
+	float borderSize = 10;
+	float posOffset = 100;
+	float posLeft = -(engineContext.windowManager->GetWidth() + borderSize) * 0.5f;
+	float posRight = (engineContext.windowManager->GetWidth() + borderSize) * 0.5f;
+	float posTop = (engineContext.windowManager->GetHeight() + borderSize) * 0.5f ;
+	float posBot = -(engineContext.windowManager->GetHeight() + borderSize) * 0.5f;
+
+	WallObject* wallLeft = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
+	wallLeft->GetTransform2D().SetScale(glm::vec2(borderSize, engineContext.windowManager->GetHeight() + borderSize));
+	wallLeft->GetTransform2D().SetPosition(glm::vec2(posLeft - posOffset, 0));
+
+	WallObject* wallRight = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
+	wallRight->GetTransform2D().SetScale(glm::vec2(borderSize, engineContext.windowManager->GetHeight() + borderSize));
+	wallRight->GetTransform2D().SetPosition(glm::vec2(posRight + posOffset, 0));
+	
+	WallObject* wallTop = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
+	wallTop->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth() + borderSize, borderSize));
+	wallTop->GetTransform2D().SetPosition(glm::vec2(0, posTop + posOffset));
+
+	WallObject* wallBot = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
+	wallBot->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth() + borderSize, borderSize));
+	wallBot->GetTransform2D().SetPosition(glm::vec2(0, posBot - posOffset));
 }
 
 void MainGame::LateInit(const EngineContext& engineContext)

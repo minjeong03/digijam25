@@ -57,6 +57,9 @@
     <ClCompile Include="WordList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WallObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainMenu.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WordList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WallObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

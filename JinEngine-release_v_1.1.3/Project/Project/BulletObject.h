@@ -15,6 +15,7 @@ public:
     void LateFree(const EngineContext& engineContext) override;
     void OnCollision(Object* other) override;
     void SetWord(const std::string& word);
+
 private:
     class SoundManager* soundManager;
     TextObject* BulletTextObject;

@@ -3,6 +3,7 @@
 
 void RealPlayer::Init(const EngineContext& engineContext)
 {
+    windowManager = engineContext.windowManager;
     transform2D.SetScale(glm::vec2(100.f));
     transform2D.SetPosition(glm::vec2(-300, 0));
     SetMesh(engineContext, "[EngineMesh]default");
@@ -18,7 +19,8 @@ void RealPlayer::Init(const EngineContext& engineContext)
     collider->SetSize({ 90,70 });
     collider->SetOffset({ glm::vec2(0,10.f) });
     SetCollider(std::move(collider));
-    SetCollision(engineContext.stateManager->GetCurrentState()->GetObjectManager(), "[CollisionTag]player", { "[CollisionTag]flag" });
+    SetCollision(engineContext.stateManager->GetCurrentState()->GetObjectManager(), "[CollisionTag]player",
+        { "[CollisionTag]bullet" });
 }
 
 void RealPlayer::LateInit(const EngineContext& engineContext)
@@ -59,7 +61,27 @@ void RealPlayer::Update(float dt, const EngineContext& engineContext)
         transform2D.AddPosition(glm::vec2(0, -350 * dt));
     }
 
-
+    glm::vec2 colliderHalfSize = static_cast<AABBCollider*>(GetCollider())->GetHalfSize();
+    glm::vec2 pos = transform2D.GetPosition();
+    if (pos.x - colliderHalfSize.x < -windowManager->GetWidth() * 0.5f) // left
+    {
+        transform2D.SetPosition(glm::vec2(-windowManager->GetWidth() * 0.5f + colliderHalfSize.x, pos.y));
+    }
+    if (pos.x + colliderHalfSize.x > windowManager->GetWidth() * 0.5f) // right
+    {
+        glm::vec2 pos = transform2D.GetPosition();
+        transform2D.SetPosition(glm::vec2(windowManager->GetWidth() * 0.5f - colliderHalfSize.x, pos.y));
+    }
+    if (pos.y + colliderHalfSize.y > windowManager->GetHeight() * 0.5f) // top
+    {
+        glm::vec2 pos = transform2D.GetPosition();
+        transform2D.SetPosition(glm::vec2(pos.x, +windowManager->GetHeight() * 0.5f - colliderHalfSize.y));
+    }
+    if (pos.y - colliderHalfSize.y < -windowManager->GetHeight() * 0.5f) // bot
+    {
+        glm::vec2 pos = transform2D.GetPosition();
+        transform2D.SetPosition(glm::vec2(pos.x, -windowManager->GetHeight() * 0.5f + colliderHalfSize.y));
+    }
 
     if (spriteAnimator && engineContext.inputManager->IsKeyPressed(KEY_A))
     {
@@ -111,6 +133,28 @@ void RealPlayer::LateFree(const EngineContext& engineContext)
 
 void RealPlayer::OnCollision(Object* other)
 {
+    if (other->GetTag() == "[Object]wall")
+    {
+        //glm::vec2 otherPos = other->GetTransform2D().GetPosition();
+        //glm::vec2 colliderHalfSize = static_cast<AABBCollider*>(GetCollider())->GetHalfSize();
+        //glm::vec2 pos = transform2D.GetPosition();
+        //if(otherPos.x < -windowManager->GetWidth() * 0.5f) // left
+        //{
+        //    transform2D.SetPosition(glm::vec2(-windowManager->GetWidth() * 0.5f + colliderHalfSize.x, pos.y));
+        //}
+        //else if(otherPos.x > windowManager->GetWidth() * 0.5f) // right
+        //{
+        //    transform2D.SetPosition(glm::vec2(windowManager->GetWidth() * 0.5f - colliderHalfSize.x, pos.y));
+        //}
+        //else if (otherPos.y > windowManager->GetHeight() * 0.5f) // top
+        //{
+        //    transform2D.SetPosition(glm::vec2(pos.x, +windowManager->GetHeight() * 0.5f - colliderHalfSize.y));
+        //}
+        //else if (otherPos.y < -windowManager->GetHeight() * 0.5f) // bot
+        //{
+        //    transform2D.SetPosition(glm::vec2(pos.x, -windowManager->GetHeight() * 0.5f + colliderHalfSize.y));
+        //}
+    }
     //if (other->GetTag() == "enemyBullet")
     //{
     //    other->Kill();

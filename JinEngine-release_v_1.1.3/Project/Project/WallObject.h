@@ -1,8 +1,8 @@
 #pragma once
-#include "ObjectManager.h"
-#include "Engine.h"
+#include "GameObject.h"
 
-class RealPlayer : public GameObject
+
+class WallObject : public GameObject
 {
 public:
     void Init(const EngineContext& engineContext) override;
@@ -12,10 +12,7 @@ public:
     void Free(const EngineContext& engineContext) override;
     void LateFree(const EngineContext& engineContext) override;
     void OnCollision(Object* other) override;
-    bool CheckIdle();
-private:  
-    WindowManager* windowManager;
-    bool checkIdle = true;
-    bool checkIdle_prevFrame = false;
-};
 
+private:
+
+};
