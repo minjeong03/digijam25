@@ -22,6 +22,6 @@ private:
     std::string BulletText = u8"안녕하세요";
     float BulletActiveTimer = 0.0f;
     float BulletActiveTime = 1.0f;
-    float Speed = 50;
+    float Speed = 150;
     glm::vec2 Direction;
 };
