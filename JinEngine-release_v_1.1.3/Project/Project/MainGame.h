@@ -4,6 +4,21 @@
 #include "RealPlayer.h"
 #include "BulletSpawnConfig.h"
 
+struct SpawnData
+{
+    float spawnTime;
+    float posX;
+    float posY;
+};
+
+struct SpawnPattern
+{
+    float loopTime;
+    std::vector<SpawnData> datum;
+    BulletSpawnConfig config;
+    
+};
+
 class MainGame : public GameState
 {
 public:
@@ -23,11 +38,18 @@ public:
 
     void Unload(const EngineContext& engineContext) override;
 
-    void LoadConfigFromFile();
+    void LoadConfigFromFile(BulletSpawnConfig& config, const std::string& str);
+
+    SpawnPattern LoadPatternsFromFile(const std::string& filepath);
+
+    void RunPattern(const SpawnPattern& p, float prevElapsed, float elapsedTime);
+
 private:
-    BulletSpawnConfig configLoadedFromFile;
     RealPlayer* player;
     float elapsedTime;
+    float endGameTime = 30;
     class WillDisplayObject* willDisplayObject;
     bool configReadPos;
+
+    std::vector<SpawnPattern> patterns;
 };

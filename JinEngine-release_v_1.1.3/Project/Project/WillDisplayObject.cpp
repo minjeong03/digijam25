@@ -8,8 +8,8 @@ void WillDisplayObject::Init(const EngineContext& engineContext)
 	SetMaterial(engineContext, "[Material]WillDisplay");
 	SetRenderLayer("[Layer]Cursor");
 
-	currLineText = "";
-	currWholeText = currLineText;
+	currWholeText = "";
+	lines.push_back(currWholeText);
 	maxCharCountPerLine = 175;
 	maxLinesPerDisplay = 8;
 	textObject = static_cast<TextObject*>(engineContext.stateManager->GetCurrentState()->GetObjectManager().AddObject(
@@ -31,6 +31,12 @@ void WillDisplayObject::LateInit(const EngineContext& engineContext)
 
 void WillDisplayObject::Update(float dt, const EngineContext& engineContext)
 {
+	if (lines.size() >= maxLinesPerDisplay - 1)
+	{
+		textObject->GetTransform2D().AddPosition(
+			glm::vec2(0, 1) * scrollSpeed * dt
+		);
+	}
 }
 
 void WillDisplayObject::Draw(const EngineContext& engineContext)
@@ -54,9 +60,9 @@ void WillDisplayObject::OnCollision(Object* other)
 
 void WillDisplayObject::PushWord(const std::string& str)
 {
-	std::string newText = currLineText;
+	std::string newText = lines.back();
 	std::string str1 = str;
-	if (currLineText.empty())
+	if (newText.empty())
 	{
 		str1 = str;
 		newText = str;
@@ -64,18 +70,19 @@ void WillDisplayObject::PushWord(const std::string& str)
 	else
 	{
 		str1 = " " + str;
-		newText = currLineText + " " + str;
+		newText = newText + " " + str;
 	}
 
 	if (newText.length() > maxCharCountPerLine)
 	{
 		currWholeText = currWholeText + "\n" + str;
-		currLineText = str;
+		lines.push_back(str);
 	}
 	else
 	{
 		currWholeText = currWholeText + str1;
-		currLineText = newText;
+		lines.pop_back();
+		lines.push_back(newText);
 	}
 
 	textObject->SetText(currWholeText);
