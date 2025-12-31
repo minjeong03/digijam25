@@ -3,6 +3,7 @@
 #include "MainGameUtils.h"
 #include "WallObject.h"
 #include "WillDisplayObject.h"
+#include "BulletSpawnerObject.h"
 
 // temp code below
 #include <fstream>
@@ -64,7 +65,7 @@ void MainGame::Init(const EngineContext& engineContext)
 	wallBot->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth() + borderSize, borderSize));
 	wallBot->GetTransform2D().SetPosition(glm::vec2(0, -posTop - posOffset));
 
-	WillDisplayObject* willDisplayObject = static_cast<WillDisplayObject*>(objectManager.AddObject(std::make_unique<WillDisplayObject>(), "[Object]WillDisplay"));
+	willDisplayObject = static_cast<WillDisplayObject*>(objectManager.AddObject(std::make_unique<WillDisplayObject>(), "[Object]WillDisplay"));
 	willDisplayObject->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth(), willDisplayHeight));
 	willDisplayObject->GetTransform2D().SetPosition(glm::vec2(0, (engineContext.windowManager->GetHeight() - willDisplayHeight) *0.5f));
 }
@@ -87,7 +88,11 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 		glm::vec2 mouseWorldPos = engineContext.inputManager->GetMouseWorldPos(GetActiveCamera());
 		BulletSpawnConfig config = configLoadedFromFile;
 		config.InitPos = mouseWorldPos;
-		GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
+		BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
+		Obj->OnCollectedWord = [this](const std::string& str) {
+			this->willDisplayObject->PushWord(str);
+			};
+
 		engineContext.soundManager->Play("[Sound]ClickSound");
 		JIN_LOG(elapsedTime << "(s) LEFT: (" << mouseWorldPos.x << ", " << mouseWorldPos.y << ")");
 	}
@@ -97,7 +102,10 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 		glm::vec2 mouseWorldPos = engineContext.inputManager->GetMouseWorldPos(GetActiveCamera());
 		BulletSpawnConfig config = configLoadedFromFile;
 		config.InitPos = mouseWorldPos;
-		GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
+		BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
+		Obj->OnCollectedWord = [this](const std::string& str) {
+			this->willDisplayObject->PushWord(str);
+			};
 		engineContext.soundManager->Play("[Sound]ClickSound");
 		JIN_LOG(elapsedTime << "(s) RIGHT: (" << mouseWorldPos.x << ", " << mouseWorldPos.y << ")");
 	}

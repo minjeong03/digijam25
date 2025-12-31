@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "BulletSpawnConfig.h"
 #include "WordList.h"
+#include <functional>
 
 class BulletSpawnerObject : public GameObject
 {
@@ -16,6 +17,7 @@ public:
     void LateFree(const EngineContext& engineContext) override;
     void OnCollision(Object* other) override;
 
+    std::function<void(const std::string&)> OnCollectedWord;
 private:
 
     BulletSpawnConfig config;
@@ -25,7 +27,6 @@ private:
     bool activated;
     
     WordList wordlist;
-
 
     void SpawnBullets(const EngineContext& engineContext) const;
 };

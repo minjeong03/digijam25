@@ -47,3 +47,8 @@ void WillDisplayObject::LateFree(const EngineContext& engineContext)
 void WillDisplayObject::OnCollision(Object* other)
 {
 }
+
+void WillDisplayObject::PushWord(const std::string& str)
+{
+	textObject->SetText(textObject->GetTextInstance()->text + " " + str);
+}
