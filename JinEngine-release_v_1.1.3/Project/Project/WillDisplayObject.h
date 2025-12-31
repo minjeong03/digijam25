@@ -23,4 +23,5 @@ private:
     std::string currLineText;
     std::string currWholeText;
     int maxCharCountPerLine;
+    int maxLinesPerDisplay;
 };

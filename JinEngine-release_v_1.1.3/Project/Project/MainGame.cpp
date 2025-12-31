@@ -32,12 +32,8 @@ void MainGame::Init(const EngineContext& engineContext)
 
 
 	elapsedTime = 0;
-	float borderSize = 10;
-	float posOffset = 100;
 	const float windowWidthHalf = engineContext.windowManager->GetWidth() * 0.5f;
 	const float windowHeightHalf = engineContext.windowManager->GetHeight() * 0.5f;
-	float posRight = windowWidthHalf + borderSize * 0.5f;
-	float posTop = windowHeightHalf + borderSize * 0.5f;
 	float willDisplayHeight = 200;
 
 	player = static_cast<RealPlayer*>(objectManager.AddObject(std::make_unique<RealPlayer>(glm::vec2(-windowWidthHalf, -windowHeightHalf), glm::vec2(windowWidthHalf, windowHeightHalf-willDisplayHeight)), "[Object]player"));
@@ -48,22 +44,6 @@ void MainGame::Init(const EngineContext& engineContext)
 	engineContext.soundManager->Play("[Sound]MainGameBGM", 1, 0);
 
 	engineContext.windowManager->SetCursorVisible(true);
-
-	WallObject* wallLeft = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
-	wallLeft->GetTransform2D().SetScale(glm::vec2(borderSize, engineContext.windowManager->GetHeight() + borderSize));
-	wallLeft->GetTransform2D().SetPosition(glm::vec2(-posRight - posOffset, 0));
-
-	WallObject* wallRight = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
-	wallRight->GetTransform2D().SetScale(glm::vec2(borderSize, engineContext.windowManager->GetHeight() + borderSize));
-	wallRight->GetTransform2D().SetPosition(glm::vec2(posRight + posOffset, 0));
-	
-	WallObject* wallTop = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
-	wallTop->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth() + borderSize, borderSize));
-	wallTop->GetTransform2D().SetPosition(glm::vec2(0, posTop + posOffset - willDisplayHeight));
-
-	WallObject* wallBot = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
-	wallBot->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth() + borderSize, borderSize));
-	wallBot->GetTransform2D().SetPosition(glm::vec2(0, -posTop - posOffset));
 
 	willDisplayObject = static_cast<WillDisplayObject*>(objectManager.AddObject(std::make_unique<WillDisplayObject>(), "[Object]WillDisplay"));
 	willDisplayObject->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth(), willDisplayHeight));

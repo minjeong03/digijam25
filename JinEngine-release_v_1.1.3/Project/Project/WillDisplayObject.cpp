@@ -10,7 +10,8 @@ void WillDisplayObject::Init(const EngineContext& engineContext)
 
 	currLineText = "";
 	currWholeText = currLineText;
-	maxCharCountPerLine = 150;
+	maxCharCountPerLine = 175;
+	maxLinesPerDisplay = 8;
 	textObject = static_cast<TextObject*>(engineContext.stateManager->GetCurrentState()->GetObjectManager().AddObject(
 		std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]default"), currWholeText, TextAlignH::Left, TextAlignV::Top),
 		"[Object]WillDisplay"));
@@ -69,7 +70,7 @@ void WillDisplayObject::PushWord(const std::string& str)
 	if (newText.length() > maxCharCountPerLine)
 	{
 		currWholeText = currWholeText + "\n" + str;
-		currLineText = "";
+		currLineText = str;
 	}
 	else
 	{
