@@ -87,7 +87,8 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 	{
 		glm::vec2 mouseWorldPos = engineContext.inputManager->GetMouseWorldPos(GetActiveCamera());
 		BulletSpawnConfig config = configLoadedFromFile;
-		config.InitPos = mouseWorldPos;
+		if (!configReadPos)
+			config.InitPos = mouseWorldPos;
 		BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
 		Obj->OnCollectedWord = [this](const std::string& str) {
 			this->willDisplayObject->PushWord(str);
@@ -101,7 +102,8 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 	{
 		glm::vec2 mouseWorldPos = engineContext.inputManager->GetMouseWorldPos(GetActiveCamera());
 		BulletSpawnConfig config = configLoadedFromFile;
-		config.InitPos = mouseWorldPos;
+		if(!configReadPos)
+			config.InitPos = mouseWorldPos;
 		BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
 		Obj->OnCollectedWord = [this](const std::string& str) {
 			this->willDisplayObject->PushWord(str);
@@ -132,13 +134,14 @@ void MainGame::Unload(const EngineContext& engineContext)
 
 void MainGame::LoadConfigFromFile()
 {
-	std::ifstream inputFile("data/ArcSpawnConfig.txt");
+	std::ifstream inputFile("data/SpawnConfig.txt");
 
 	if (!inputFile.is_open()) {
 		return;
 	}
 
 	std::string str;
+	bool readPos;
 	inputFile >> str >> configLoadedFromFile.CircleRadius;
 	inputFile >> str >> configLoadedFromFile.Delay;
 	inputFile >> str >> configLoadedFromFile.Lifetime;
@@ -149,6 +152,12 @@ void MainGame::LoadConfigFromFile()
 	inputFile >> str >> configLoadedFromFile.StartAngle;
 	inputFile >> str >> configLoadedFromFile.EndAngle;
 	inputFile >> str >> configLoadedFromFile.BulletSpeed;
+	inputFile >> str >> readPos;
+	if (readPos)
+	{
+		inputFile >> str >> configLoadedFromFile.InitPos.x >> configLoadedFromFile.InitPos.y;
+	}
+	configReadPos = readPos;
 
 	inputFile.close();
 }

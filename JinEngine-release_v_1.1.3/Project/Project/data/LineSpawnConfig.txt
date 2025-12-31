@@ -1,0 +1,12 @@
+CircleRadius 800
+Delay 0.3
+Lifetime 10
+PatternAngleSpacing 2
+SpawnInterval 0.3
+AngleVariance 1
+WordDataFilepath data/Noun.txt
+StartAngle 265
+EndAngle 275
+BulletSpeed 250
+ReadPos? 1
+InitPos -200 1000

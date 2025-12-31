@@ -8,3 +8,4 @@ WordDataFilepath data/Noun.txt
 StartAngle 0
 EndAngle 0
 BulletSpeed 300
+ReadPos? 0

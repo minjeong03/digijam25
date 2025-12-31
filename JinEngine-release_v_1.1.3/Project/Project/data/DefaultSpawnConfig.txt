@@ -7,3 +7,6 @@ AngleVariance 0
 WordDataFilepath data/Noun.txt
 StartAngle 0
 EndAngle 0
+BulletSpeed 500
+ReadPos? 0
+InitPos -200 1000

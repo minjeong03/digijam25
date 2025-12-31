@@ -29,4 +29,5 @@ private:
     RealPlayer* player;
     float elapsedTime;
     class WillDisplayObject* willDisplayObject;
+    bool configReadPos;
 };
