@@ -16,7 +16,7 @@ public:
     void OnCollision(Object* other) override;
     void SetWord(const std::string& word);
 
-    float Speed = 50;
+    float Speed = 150;
 private:
     class SoundManager* soundManager;
     TextObject* BulletTextObject;

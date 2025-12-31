@@ -9,11 +9,11 @@ void WillDisplayObject::Init(const EngineContext& engineContext)
 	SetRenderLayer("[Layer]Cursor");
 
 	textObject = static_cast<TextObject*>(engineContext.stateManager->GetCurrentState()->GetObjectManager().AddObject(
-		std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]default"), u8"안녕하세요", TextAlignH::Left, TextAlignV::Top),
+		std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]default"), u8"사랑하는", TextAlignH::Left, TextAlignV::Top),
 		"[Object]WillDisplay"));
 
 	const float w = engineContext.windowManager->GetWidth();
-	glm::vec2 textBoxSize = { w - 100,180};
+	glm::vec2 textBoxSize = { w - 50,180};
 	textObject->SetRenderLayer("[Layer]Top");
 	textObject->GetTransform2D().SetPosition(GetWorldPosition() + textBoxSize*0.5f* glm::vec2(-1,1));
 	textObject->GetTransform2D().SetScale({ 0.3f,0.3f });
