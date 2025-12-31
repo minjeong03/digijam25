@@ -1,6 +1,6 @@
 #pragma once
 #include <glm.hpp>
-
+#include <vector>
 
 struct BulletSpawnConfig
 {
@@ -13,7 +13,7 @@ struct BulletSpawnConfig
     float Lifetime = 0.0f; // life time in sec after activation
     float StartAngle = 0.0f; // degree
     float EndAngle = 0.0f; // degree
-    std::string WordDataFilepath;
+    std::vector<std::string> WordDataFilepaths;
     float BulletSpeed = 150;
 
 

@@ -16,7 +16,7 @@ void BulletSpawnerObject::Init(const EngineContext& engineContext)
 	delayTimer = 0;
 	spawnTimer = 0;
 	activated = false;
-	wordlist = CreateWordList(config.WordDataFilepath);
+	wordlist = CreateWordList(config.WordDataFilepaths);
 }
 
 void BulletSpawnerObject::LateInit(const EngineContext& engineContext)
