@@ -134,7 +134,7 @@ void MainGame::Unload(const EngineContext& engineContext)
 
 void MainGame::LoadConfigFromFile()
 {
-	std::ifstream inputFile("data/SpawnConfig.txt");
+	std::ifstream inputFile("data/Config/SpawnConfig.txt");
 
 	if (!inputFile.is_open()) {
 		return;
@@ -142,13 +142,20 @@ void MainGame::LoadConfigFromFile()
 
 	std::string str;
 	bool readPos;
+	int howmanyfiles;
 	inputFile >> str >> configLoadedFromFile.CircleRadius;
 	inputFile >> str >> configLoadedFromFile.Delay;
 	inputFile >> str >> configLoadedFromFile.Lifetime;
 	inputFile >> str >> configLoadedFromFile.PatternAngleSpacing;
 	inputFile >> str >> configLoadedFromFile.SpawnInterval;
 	inputFile >> str >> configLoadedFromFile.AngleVariance;
-	inputFile >> str >> configLoadedFromFile.WordDataFilepath;
+	inputFile >> str >> howmanyfiles;
+	configLoadedFromFile.WordDataFilepaths.reserve(howmanyfiles);
+	for (int i = 0; i < howmanyfiles; ++i)
+	{
+		inputFile >> str;
+		configLoadedFromFile.WordDataFilepaths.push_back(str);
+	}
 	inputFile >> str >> configLoadedFromFile.StartAngle;
 	inputFile >> str >> configLoadedFromFile.EndAngle;
 	inputFile >> str >> configLoadedFromFile.BulletSpeed;

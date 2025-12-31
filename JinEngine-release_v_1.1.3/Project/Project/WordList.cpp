@@ -7,30 +7,28 @@ WordList::WordList()
 
 }
 
-WordList CreateWordList(const std::string& wordlistpath)
+WordList CreateWordList(const std::vector<std::string>& wordlistpath)
 {
 	WordList wordlist;
 
-	std::ifstream inputFile(wordlistpath);
-	std::string temp;
-
-	
-	std::string temp1 = u8"안녕";
-
-	std::string temp2 = u8"잘가";
-
-	if (!inputFile.is_open()) {
-		// Error
-		return wordlist;
-	}
-
-	while (std::getline(inputFile,temp ))
+	for (int i = 0; i < wordlistpath.size(); ++i)
 	{
-		wordlist.words.push_back(temp);
+		std::ifstream inputFile(wordlistpath[i]);
+
+		if (!inputFile.is_open()) {
+			// Error
+			return wordlist;
+		}
+
+		std::string temp;
+		while (std::getline(inputFile, temp))
+		{
+			wordlist.words.push_back(temp);
+		}
+
+
+		inputFile.close();
 	}
-
-
-	inputFile.close();
 
 
 	return wordlist;

@@ -4,7 +4,8 @@ Lifetime 5
 PatternAngleSpacing 25
 SpawnInterval 0.8
 AngleVariance 0
-WordDataFilepath data/Noun.txt
+NumFiles 1
+data/Words/Noun.txt
 StartAngle 0
 EndAngle 0
 BulletSpeed 500
