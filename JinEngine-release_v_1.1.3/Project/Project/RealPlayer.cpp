@@ -9,7 +9,7 @@ RealPlayer::RealPlayer(const glm::vec2& boundaryMin_, const glm::vec2& boundaryM
 void RealPlayer::Init(const EngineContext& engineContext)
 {
     windowManager = engineContext.windowManager;
-    transform2D.SetScale(glm::vec2(100.f));
+    transform2D.SetScale(glm::vec2(60.f));
     transform2D.SetPosition(glm::vec2(-300, 0));
     SetMesh(engineContext, "[EngineMesh]default");
     SetMaterial(engineContext, "[Material]Animation");
@@ -21,8 +21,8 @@ void RealPlayer::Init(const EngineContext& engineContext)
     AttachAnimator(sheet, 0.08f);
     auto collider = std::make_unique<AABBCollider>(this, glm::vec2(1.0, 1.0));
     collider->SetUseTransformScale(false);
-    collider->SetSize({ 90,70 });
-    collider->SetOffset({ glm::vec2(0,10.f) });
+    collider->SetSize({ 30,30 });
+    collider->SetOffset({ glm::vec2(0) });
     SetCollider(std::move(collider));
     SetCollision(engineContext.stateManager->GetCurrentState()->GetObjectManager(), "[CollisionTag]player",
         { "[CollisionTag]bullet" });
