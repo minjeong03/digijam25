@@ -4,6 +4,7 @@
 #include "WallObject.h"
 #include "WillDisplayObject.h"
 #include "BulletSpawnerObject.h"
+#include "MainMenu.h"
 
 // temp code below
 #include <fstream>
@@ -57,6 +58,11 @@ void MainGame::LateInit(const EngineContext& engineContext)
 void MainGame::Update(float dt, const EngineContext& engineContext)
 {
 	elapsedTime += dt;
+
+	if (elapsedTime >= endGameTime)
+	{
+		engineContext.stateManager->ChangeState(std::make_unique<MainMenu>());
+	}
 
 	if (engineContext.inputManager->IsKeyPressed(KEY_F))
 	{

@@ -16,12 +16,13 @@ public:
     void OnCollision(Object* other) override;
     void PushWord(const std::string& str);
 
-    std::queue<std::string> pendingCollectedWords;
     std::vector<std::string> appliedCollectedWords;
 private:
     TextObject* textObject;
-    std::string currLineText;
+    std::deque<std::string> lines;
     std::string currWholeText;
     int maxCharCountPerLine;
     int maxLinesPerDisplay;
+
+    float scrollSpeed = 5;
 };
