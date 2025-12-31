@@ -20,5 +20,7 @@ public:
     std::vector<std::string> appliedCollectedWords;
 private:
     TextObject* textObject;
-
+    std::string currLineText;
+    std::string currWholeText;
+    int maxCharCountPerLine;
 };
