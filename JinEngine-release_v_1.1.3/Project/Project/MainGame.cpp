@@ -20,6 +20,7 @@ void MainGame::Load(const EngineContext& engineContext)
 	rm->RegisterMaterial("[Material]Bullet", "[EngineShader]default_texture", { {"u_Texture","[Texture]BulletBackground"} });
 	rm->RegisterMaterial("[Material]WillDisplay", "[EngineShader]default_texture", { {"u_Texture","[Texture]WillBackground"} });
 
+	rm->RegisterTexture("[Texture]Background", "Textures/BackGround.jpeg");
 
 	SoundManager* sm = engineContext.soundManager;
 	sm->LoadSound("[Sound]MainGameBGM", "Sounds/test.mp3");
@@ -81,6 +82,8 @@ void MainGame::LateUpdate(float dt, const EngineContext& engineContext)
 void MainGame::Draw(const EngineContext& engineContext)
 {
 	objectManager.DrawAll(engineContext);
+
+
 }
 
 void MainGame::Free(const EngineContext& engineContext)
