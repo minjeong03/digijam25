@@ -20,8 +20,6 @@ void MainGame::Load(const EngineContext& engineContext)
 	rm->RegisterMaterial("[Material]Bullet", "[EngineShader]default_texture", { {"u_Texture","[Texture]BulletBackground"} });
 	rm->RegisterMaterial("[Material]WillDisplay", "[EngineShader]default_texture", { {"u_Texture","[Texture]WillBackground"} });
 
-	rm->RegisterTexture("[Texture]Background", "Textures/BackGround.jpeg");
-
 	SoundManager* sm = engineContext.soundManager;
 	sm->LoadSound("[Sound]MainGameBGM", "Sounds/test.mp3");
 	sm->LoadSound("[Sound]OuchSound", "Sounds/8bitsound.wav");
