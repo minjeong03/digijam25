@@ -1,0 +1,15 @@
+CircleRadius 100
+Delay 0.3
+Lifetime 6
+PatternAngleSpacing 25
+SpawnInterval 0.8
+AngleVariance 20
+NumFiles 3
+data/Words/Adjective.txt
+data/Words/NounPeople.txt
+data/Words/NounToGive.txt
+StartAngle 0
+EndAngle 0
+BulletSpeed 200
+ReadPos? 0
+InitPos -500 -1200

@@ -25,13 +25,14 @@ void MainGame::Load(const EngineContext& engineContext)
 	sm->LoadSound("[Sound]MainGameBGM", "Sounds/test.mp3");
 	sm->LoadSound("[Sound]OuchSound", "Sounds/8bitsound.wav");
 	sm->LoadSound("[Sound]ClickSound", "Sounds/poka.mp3");
+
+	patterns.push_back(LoadPatternsFromFile("data/Patterns/p1.txt"));
+	patterns.push_back(LoadPatternsFromFile("data/Patterns/p2.txt"));
+	//patterns.push_back(LoadPatternsFromFile("data/Patterns/p3.txt"));
 }
 
 void MainGame::Init(const EngineContext& engineContext)
 {
-	LoadConfigFromFile();
-
-
 	elapsedTime = 0;
 	const float windowWidthHalf = engineContext.windowManager->GetWidth() * 0.5f;
 	const float windowHeightHalf = engineContext.windowManager->GetHeight() * 0.5f;
@@ -57,6 +58,7 @@ void MainGame::LateInit(const EngineContext& engineContext)
 
 void MainGame::Update(float dt, const EngineContext& engineContext)
 {
+	float prev = elapsedTime;
 	elapsedTime += dt;
 
 	if (elapsedTime >= endGameTime)
@@ -64,18 +66,11 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 		engineContext.stateManager->ChangeState(std::make_unique<MainMenu>());
 	}
 
-	if (engineContext.inputManager->IsKeyPressed(KEY_F))
+	for (int i = 0; i < patterns.size(); ++i)
 	{
-		LoadConfigFromFile();
+		RunPattern(patterns[i], prev, elapsedTime);
 	}
 
-	BulletSpawnConfig config = configLoadedFromFile;
-	BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
-	Obj->OnCollectedWord = [this](const std::string& str) {
-		this->willDisplayObject->PushWord(str);
-		};
-
-	
 	objectManager.UpdateAll(dt, engineContext);
 }
 
@@ -96,9 +91,9 @@ void MainGame::Unload(const EngineContext& engineContext)
 {
 }
 
-void MainGame::LoadConfigFromFile()
+void MainGame::LoadConfigFromFile(BulletSpawnConfig& config, const std::string& path)
 {
-	std::ifstream inputFile("data/Config/SpawnConfig.txt");
+	std::ifstream inputFile(path);
 
 	if (!inputFile.is_open()) {
 		return;
@@ -107,28 +102,80 @@ void MainGame::LoadConfigFromFile()
 	std::string str;
 	bool readPos;
 	int howmanyfiles;
-	inputFile >> str >> configLoadedFromFile.CircleRadius;
-	inputFile >> str >> configLoadedFromFile.Delay;
-	inputFile >> str >> configLoadedFromFile.Lifetime;
-	inputFile >> str >> configLoadedFromFile.PatternAngleSpacing;
-	inputFile >> str >> configLoadedFromFile.SpawnInterval;
-	inputFile >> str >> configLoadedFromFile.AngleVariance;
+	inputFile >> str >> config.CircleRadius;
+	inputFile >> str >> config.Delay;
+	inputFile >> str >> config.Lifetime;
+	inputFile >> str >> config.PatternAngleSpacing;
+	inputFile >> str >> config.SpawnInterval;
+	inputFile >> str >> config.AngleVariance;
 	inputFile >> str >> howmanyfiles;
-	configLoadedFromFile.WordDataFilepaths.reserve(howmanyfiles);
+	config.WordDataFilepaths.reserve(howmanyfiles);
 	for (int i = 0; i < howmanyfiles; ++i)
 	{
 		inputFile >> str;
-		configLoadedFromFile.WordDataFilepaths.push_back(str);
+		config.WordDataFilepaths.push_back(str);
 	}
-	inputFile >> str >> configLoadedFromFile.StartAngle;
-	inputFile >> str >> configLoadedFromFile.EndAngle;
-	inputFile >> str >> configLoadedFromFile.BulletSpeed;
+	inputFile >> str >> config.StartAngle;
+	inputFile >> str >> config.EndAngle;
+	inputFile >> str >> config.BulletSpeed;
 	inputFile >> str >> readPos;
 	if (readPos)
 	{
-		inputFile >> str >> configLoadedFromFile.InitPos.x >> configLoadedFromFile.InitPos.y;
+		inputFile >> str >> config.InitPos.x >> config.InitPos.y;
 	}
 	configReadPos = readPos;
 
 	inputFile.close();
+}
+
+SpawnPattern MainGame::LoadPatternsFromFile(const std::string& filepath)
+{
+	SpawnPattern pattern;
+	pattern.loopTime = 0.0f;
+
+	std::ifstream file(filepath);
+	if (!file.is_open())
+	{
+		std::cerr << "Failed to open file: " << filepath << std::endl;
+		return pattern;
+	}
+
+	file >> pattern.loopTime; 
+	std::string path;
+	file >> path;
+	LoadConfigFromFile(pattern.config, path);
+	int count;
+	file >> count;
+	char c;
+	for (int i = 0; i < count; ++i)
+	{
+		SpawnData data;
+		file >> data.spawnTime >> data.posX >> c >> data.posY;
+
+		pattern.datum.push_back(data);
+	}
+
+	file.close();
+	return pattern;
+}
+
+void MainGame::RunPattern(const SpawnPattern& p, float prevElapsed, float elapsedTime)
+{
+	BulletSpawnConfig config = p.config;
+	float eTimePrev = std::fmod(prevElapsed, p.loopTime);
+	float eTime = std::fmod(elapsedTime, p.loopTime);
+	
+	for (int i = 0; i < p.datum.size(); ++i)
+	{
+		if (eTimePrev < p.datum[i].spawnTime  && p.datum[i].spawnTime <= eTime)
+		{
+			JIN_LOG(p.datum[i].spawnTime << " spawn " << elapsedTime);
+			config.InitPos.x = p.datum[i].posX;
+			config.InitPos.y = p.datum[i].posY;
+			BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
+			Obj->OnCollectedWord = [this](const std::string& str) {
+				this->willDisplayObject->PushWord(str);
+				};
+		}
+	}
 }

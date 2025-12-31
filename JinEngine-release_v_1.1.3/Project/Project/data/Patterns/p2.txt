@@ -1,0 +1,6 @@
+4 data/Config/LineSpawnConfig.txt
+4
+2 -500 1000
+2 -200 1000
+2 100 1000
+2 400 1000

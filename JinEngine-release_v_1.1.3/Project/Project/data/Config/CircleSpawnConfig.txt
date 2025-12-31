@@ -1,12 +1,12 @@
 CircleRadius 100
 Delay 1
-Lifetime 5
+Lifetime 1
 PatternAngleSpacing 25
 SpawnInterval 0.8
 AngleVariance 20
 NumFiles 1
-data/Words/Noun.txt
+data/Words/NounPeople.txt
 StartAngle 0
 EndAngle 0
-BulletSpeed 300
+BulletSpeed 100
 ReadPos? 0
