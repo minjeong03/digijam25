@@ -8,15 +8,18 @@ void WillDisplayObject::Init(const EngineContext& engineContext)
 	SetMaterial(engineContext, "[Material]WillDisplay");
 	SetRenderLayer("[Layer]Cursor");
 
+	currLineText = "";
+	currWholeText = currLineText;
+	maxCharCountPerLine = 150;
 	textObject = static_cast<TextObject*>(engineContext.stateManager->GetCurrentState()->GetObjectManager().AddObject(
-		std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]default"), u8"사랑하는", TextAlignH::Left, TextAlignV::Top),
+		std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]default"), currWholeText, TextAlignH::Left, TextAlignV::Top),
 		"[Object]WillDisplay"));
 
 	const float w = engineContext.windowManager->GetWidth();
 	glm::vec2 textBoxSize = { w - 50,180};
 	textObject->SetRenderLayer("[Layer]Top");
 	textObject->GetTransform2D().SetPosition(GetWorldPosition() + textBoxSize*0.5f* glm::vec2(-1,1));
-	textObject->GetTransform2D().SetScale({ 0.3f,0.3f });
+	textObject->GetTransform2D().SetScale({ 0.4f,0.4f });
 	textObject->SetColor(glm::vec4(0, 0, 0, 1));
 }
 
@@ -50,5 +53,29 @@ void WillDisplayObject::OnCollision(Object* other)
 
 void WillDisplayObject::PushWord(const std::string& str)
 {
-	textObject->SetText(textObject->GetTextInstance()->text + " " + str);
+	std::string newText = currLineText;
+	std::string str1 = str;
+	if (currLineText.empty())
+	{
+		str1 = str;
+		newText = str;
+	}
+	else
+	{
+		str1 = " " + str;
+		newText = currLineText + " " + str;
+	}
+
+	if (newText.length() > maxCharCountPerLine)
+	{
+		currWholeText = currWholeText + "\n" + str;
+		currLineText = "";
+	}
+	else
+	{
+		currWholeText = currWholeText + str1;
+		currLineText = newText;
+	}
+
+	textObject->SetText(currWholeText);
 }

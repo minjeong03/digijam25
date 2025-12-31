@@ -5,7 +5,7 @@ PatternAngleSpacing 2
 SpawnInterval 0.3
 AngleVariance 1
 NumFiles 2
-data/Words/test1.txt
+data/Words/Noun.txt
 data/Words/test2.txt
 StartAngle 265
 EndAngle 275
