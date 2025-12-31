@@ -63,20 +63,12 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 		LoadConfigFromFile();
 	}
 
-	if (engineContext.inputManager->IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-	{
-		glm::vec2 mouseWorldPos = engineContext.inputManager->GetMouseWorldPos(GetActiveCamera());
-		BulletSpawnConfig config = configLoadedFromFile;
-		if (!configReadPos)
-			config.InitPos = mouseWorldPos;
-		BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
-		Obj->OnCollectedWord = [this](const std::string& str) {
-			this->willDisplayObject->PushWord(str);
-			};
+	BulletSpawnConfig config = configLoadedFromFile;
+	BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
+	Obj->OnCollectedWord = [this](const std::string& str) {
+		this->willDisplayObject->PushWord(str);
+		};
 
-		engineContext.soundManager->Play("[Sound]ClickSound");
-		JIN_LOG(elapsedTime << "(s) LEFT: (" << mouseWorldPos.x << ", " << mouseWorldPos.y << ")");
-	}
 	
 	objectManager.UpdateAll(dt, engineContext);
 }
