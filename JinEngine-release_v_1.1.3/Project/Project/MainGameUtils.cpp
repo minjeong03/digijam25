@@ -4,7 +4,8 @@
 
 namespace GameObjectUtils
 {
-	BulletObject* CreateBulletObject(ObjectManager& om, const glm::vec2& pos, const glm::vec2 scale, const glm::vec2& dir, const std::string& word, float speed)
+	BulletObject* CreateBulletObject(ObjectManager& om, const glm::vec2& pos, const glm::vec2 scale, const glm::vec2& dir, 
+		const std::string& word, float speed, std::function<void(const std::string&)> wordCollectionCallback)
 	{
 		std::unique_ptr<BulletObject> Bullet = std::make_unique<BulletObject>(dir);
 		BulletObject* BulletPtr = Bullet.get();
@@ -14,6 +15,7 @@ namespace GameObjectUtils
 		Bullet->GetTransform2D().SetPosition(pos);
 		Bullet->SetWord(word);
 		Bullet->Speed = speed;
+		Bullet->OnCollectedWord = wordCollectionCallback;
 		om.AddObject(std::move(Bullet), "[Object]bullet");
 		return BulletPtr;
 	}

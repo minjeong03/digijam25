@@ -66,6 +66,10 @@ void BulletObject::OnCollision(Object* other)
 	{
 		BulletTextObject->Kill();
 		Kill();
+		if (OnCollectedWord)
+		{
+			OnCollectedWord(BulletText);
+		}
 
 		soundManager->Play("[Sound]OuchSound");
 	}

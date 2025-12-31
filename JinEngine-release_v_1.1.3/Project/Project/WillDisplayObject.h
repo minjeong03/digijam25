@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "TextObject.h"
+#include <queue>
+#include <vector>
 
 class WillDisplayObject : public GameObject
 {
@@ -12,7 +14,11 @@ public:
     void Free(const EngineContext& engineContext) override;
     void LateFree(const EngineContext& engineContext) override;
     void OnCollision(Object* other) override;
+    void PushWord(const std::string& str);
 
+    std::queue<std::string> pendingCollectedWords;
+    std::vector<std::string> appliedCollectedWords;
 private:
     TextObject* textObject;
+
 };

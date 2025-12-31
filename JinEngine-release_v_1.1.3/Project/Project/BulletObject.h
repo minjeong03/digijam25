@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "TextObject.h"
+#include <functional>
 
 class BulletObject : public GameObject
 {
@@ -15,7 +16,8 @@ public:
     void LateFree(const EngineContext& engineContext) override;
     void OnCollision(Object* other) override;
     void SetWord(const std::string& word);
-
+    std::function<void(const std::string&)> OnCollectedWord;
+   
     float Speed = 150;
 private:
     class SoundManager* soundManager;

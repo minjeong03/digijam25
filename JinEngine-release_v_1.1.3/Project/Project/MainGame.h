@@ -28,4 +28,5 @@ private:
     BulletSpawnConfig configLoadedFromFile;
     RealPlayer* player;
     float elapsedTime;
+    class WillDisplayObject* willDisplayObject;
 };
