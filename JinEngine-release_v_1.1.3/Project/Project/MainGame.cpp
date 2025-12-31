@@ -140,6 +140,7 @@ void MainGame::LoadConfigFromFile()
 	inputFile >> str >> configLoadedFromFile.WordDataFilepath;
 	inputFile >> str >> configLoadedFromFile.StartAngle;
 	inputFile >> str >> configLoadedFromFile.EndAngle;
+	inputFile >> str >> configLoadedFromFile.BulletSpeed;
 
 	inputFile.close();
 }

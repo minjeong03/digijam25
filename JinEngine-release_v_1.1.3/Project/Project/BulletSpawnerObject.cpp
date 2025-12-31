@@ -75,7 +75,7 @@ void BulletSpawnerObject::SpawnBullets(const EngineContext& engineContext) const
 		float dirX = std::cos(currAngle + valueX * rad);
 		float dirY = std::sin(currAngle + valueY * rad);
 		std::string word = wordlist.GetRandomWord();
-		GameObjectUtils::CreateBulletObject(om, config.InitPos + config.CircleRadius * glm::vec2(dirX, dirY), glm::vec2(32, 32), glm::vec2(dirX, dirY), word);
+		GameObjectUtils::CreateBulletObject(om, config.InitPos + config.CircleRadius * glm::vec2(dirX, dirY), glm::vec2(32, 32), glm::vec2(dirX, dirY), word, config.BulletSpeed);
 		currAngle += patternAngleSpacingRadian;
 	}
 }

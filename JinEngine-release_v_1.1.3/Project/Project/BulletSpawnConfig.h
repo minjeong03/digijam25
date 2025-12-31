@@ -14,6 +14,7 @@ struct BulletSpawnConfig
     float StartAngle = 0.0f; // degree
     float EndAngle = 0.0f; // degree
     std::string WordDataFilepath;
+    float BulletSpeed = 150;
 
 
 };

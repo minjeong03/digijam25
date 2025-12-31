@@ -139,66 +139,7 @@ void RealPlayer::LateFree(const EngineContext& engineContext)
 
 void RealPlayer::OnCollision(Object* other)
 {
-    if (other->GetTag() == "[Object]wall")
-    {
-        //glm::vec2 otherPos = other->GetTransform2D().GetPosition();
-        //glm::vec2 colliderHalfSize = static_cast<AABBCollider*>(GetCollider())->GetHalfSize();
-        //glm::vec2 pos = transform2D.GetPosition();
-        //if(otherPos.x < -windowManager->GetWidth() * 0.5f) // left
-        //{
-        //    transform2D.SetPosition(glm::vec2(-windowManager->GetWidth() * 0.5f + colliderHalfSize.x, pos.y));
-        //}
-        //else if(otherPos.x > windowManager->GetWidth() * 0.5f) // right
-        //{
-        //    transform2D.SetPosition(glm::vec2(windowManager->GetWidth() * 0.5f - colliderHalfSize.x, pos.y));
-        //}
-        //else if (otherPos.y > windowManager->GetHeight() * 0.5f) // top
-        //{
-        //    transform2D.SetPosition(glm::vec2(pos.x, +windowManager->GetHeight() * 0.5f - colliderHalfSize.y));
-        //}
-        //else if (otherPos.y < -windowManager->GetHeight() * 0.5f) // bot
-        //{
-        //    transform2D.SetPosition(glm::vec2(pos.x, -windowManager->GetHeight() * 0.5f + colliderHalfSize.y));
-        //}
-    }
-    //if (other->GetTag() == "enemyBullet")
-    //{
-    //    other->Kill();
-    //}
-    //if (other->GetTag() == "enemy" && this < other)
-    //{
-    //    glm::vec2 halfSize = GetWorldScale() / glm::vec2(2);
-    //    glm::vec2 otherHalfSize = other->GetWorldScale() / glm::vec2(2);
-
-    //    glm::vec2 center = GetWorldPosition() + halfSize;
-    //    glm::vec2 otherCenter = other->GetWorldPosition() + otherHalfSize;
-
-    //    glm::vec2 delta = center - otherCenter;
-    //    glm::vec2 overlap = halfSize + otherHalfSize - glm::abs(delta);
-
-    //    if (overlap.x > 0 && overlap.y > 0)
-    //    {
-    //        glm::vec2 correction = { 0, 0 };
-
-    //        if (overlap.x < overlap.y)
-    //        {
-    //            correction.x = (delta.x > 0 ? overlap.x : -overlap.x) * 0.5f;
-    //        }
-    //        else
-    //        {
-    //            correction.y = (delta.y > 0 ? overlap.y : -overlap.y) * 0.5f;
-    //        }
-    //        if (!static_cast<Enemy*>(other)->CheckIdle())
-    //            other->GetTransform2D().AddPosition(-correction);
-    //        if (!checkIdle)
-    //            GetTransform2D().AddPosition(correction);
-				//
-    //    }
-    //}
-    //if (other->GetTag() == "StartButton" || other->GetTag() == "QuitButton")
-    //{
-    //    other->SetColor({ 0.3,0.3,0.3,1.0 });
-    //}
+   
 }
 
 bool RealPlayer::CheckIdle()

@@ -16,12 +16,12 @@ public:
     void OnCollision(Object* other) override;
     void SetWord(const std::string& word);
 
+    float Speed = 50;
 private:
     class SoundManager* soundManager;
     TextObject* BulletTextObject;
     std::string BulletText = u8"안녕하세요";
     float BulletActiveTimer = 0.0f;
     float BulletActiveTime = 1.0f;
-    float Speed = 50;
     glm::vec2 Direction;
 };
