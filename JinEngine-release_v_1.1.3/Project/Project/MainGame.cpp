@@ -61,13 +61,13 @@ void MainGame::Update(float dt, const EngineContext& engineContext)
 	if (engineContext.inputManager->IsKeyPressed(KEY_F))
 	{
 		LoadConfigFromFile();
-	}
 
 	BulletSpawnConfig config = configLoadedFromFile;
 	BulletSpawnerObject* Obj = GameObjectUtils::CreateBulletSpawnerObject(objectManager, config);
 	Obj->OnCollectedWord = [this](const std::string& str) {
 		this->willDisplayObject->PushWord(str);
 		};
+	}
 
 	
 	objectManager.UpdateAll(dt, engineContext);
