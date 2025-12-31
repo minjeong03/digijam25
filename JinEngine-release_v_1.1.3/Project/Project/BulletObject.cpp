@@ -6,6 +6,12 @@ BulletObject::BulletObject(const glm::vec2& Dir)
 }
 void BulletObject::Init(const EngineContext& engineContext)
 {
+	const float windowWidthHalf = engineContext.windowManager->GetWidth() * 0.5f;
+	const float windowHeightHalf = engineContext.windowManager->GetHeight() * 0.5f;
+	float scalar = 1.5f;
+	boundaryMin = glm::vec2(-windowWidthHalf* scalar, -windowHeightHalf* scalar);
+	boundaryMax = glm::vec2(windowWidthHalf * scalar, windowHeightHalf * scalar);
+
 	soundManager = engineContext.soundManager;
 
 	SetMesh(engineContext, "[EngineMesh]default");
@@ -24,7 +30,7 @@ std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]de
 	collider->SetSize(BulletTextObject->GetWorldScale());
 	SetCollider(std::move(collider));
 	SetCollision(engineContext.stateManager->GetCurrentState()->GetObjectManager(), 
-		"[CollisionTag]bullet", { "[CollisionTag]player", "[CollisionTag]wall"});
+		"[CollisionTag]bullet", { "[CollisionTag]player"});
 
 }
 
@@ -43,6 +49,13 @@ void BulletObject::Update(float dt, const EngineContext& engineContext)
 		BulletTextObject->GetTransform2D().SetPosition(GetWorldPosition());
 	}
 
+	
+	glm::vec2 pos = transform2D.GetPosition();
+	if (pos.x < boundaryMin.x || pos.x > boundaryMax.x || pos.y > boundaryMax.y || pos.y < boundaryMin.y)
+	{
+		BulletTextObject->Kill();
+		Kill();
+	}
 }
 
 void BulletObject::Draw(const EngineContext& engineContext)
@@ -72,12 +85,6 @@ void BulletObject::OnCollision(Object* other)
 		}
 
 		soundManager->Play("[Sound]OuchSound");
-	}
-	else if (other->GetTag() == "[Object]wall")
-	{
-
-		BulletTextObject->Kill();
-		Kill();
 	}
 }
 

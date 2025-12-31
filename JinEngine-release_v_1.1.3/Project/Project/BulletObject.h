@@ -26,4 +26,7 @@ private:
     float BulletActiveTimer = 0.0f;
     float BulletActiveTime = 1.0f;
     glm::vec2 Direction;
+
+    glm::vec2 boundaryMin;
+    glm::vec2 boundaryMax;
 };
