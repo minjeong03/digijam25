@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
     jinEngine.GetEngineContext().renderManager->RegisterRenderLayer("[Layer]UIText", 12);
     jinEngine.GetEngineContext().renderManager->RegisterRenderLayer("[Layer]FrameBufferTexture", 13);
     jinEngine.GetEngineContext().renderManager->RegisterRenderLayer("[Layer]Cursor", 14);
+    jinEngine.GetEngineContext().renderManager->RegisterRenderLayer("[Layer]Top", 15);
     //jinEngine.GetEngineContext().renderManager->RegisterFont("[Font]default", "Fonts/NotoSans-VariableFont_wdth,wght.ttf", 50);
     jinEngine.GetEngineContext().renderManager->RegisterFont("[Font]default", "Fonts/Galmuri9.ttf", 50);
 

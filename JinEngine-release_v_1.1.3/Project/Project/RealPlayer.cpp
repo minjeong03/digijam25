@@ -1,6 +1,11 @@
 ﻿#include "RealPlayer.h"
 #include "Engine.h"
 
+RealPlayer::RealPlayer(const glm::vec2& boundaryMin_, const glm::vec2& boundaryMax_)
+    : boundaryMin(boundaryMin_), boundaryMax(boundaryMax_)
+{
+}
+
 void RealPlayer::Init(const EngineContext& engineContext)
 {
     windowManager = engineContext.windowManager;
@@ -62,25 +67,28 @@ void RealPlayer::Update(float dt, const EngineContext& engineContext)
     }
 
     glm::vec2 colliderHalfSize = static_cast<AABBCollider*>(GetCollider())->GetHalfSize();
-    glm::vec2 pos = transform2D.GetPosition();
-    if (pos.x - colliderHalfSize.x < -windowManager->GetWidth() * 0.5f) // left
-    {
-        transform2D.SetPosition(glm::vec2(-windowManager->GetWidth() * 0.5f + colliderHalfSize.x, pos.y));
-    }
-    if (pos.x + colliderHalfSize.x > windowManager->GetWidth() * 0.5f) // right
     {
         glm::vec2 pos = transform2D.GetPosition();
-        transform2D.SetPosition(glm::vec2(windowManager->GetWidth() * 0.5f - colliderHalfSize.x, pos.y));
+        if (pos.x - colliderHalfSize.x < boundaryMin.x) // left
+        {
+            transform2D.SetPosition(glm::vec2(boundaryMin.x + colliderHalfSize.x, pos.y));
+        }
+        else if (pos.x + colliderHalfSize.x > boundaryMax.x) // right
+        {
+            transform2D.SetPosition(glm::vec2(boundaryMax.x - colliderHalfSize.x, pos.y));
+        }
     }
-    if (pos.y + colliderHalfSize.y > windowManager->GetHeight() * 0.5f) // top
     {
         glm::vec2 pos = transform2D.GetPosition();
-        transform2D.SetPosition(glm::vec2(pos.x, +windowManager->GetHeight() * 0.5f - colliderHalfSize.y));
-    }
-    if (pos.y - colliderHalfSize.y < -windowManager->GetHeight() * 0.5f) // bot
-    {
-        glm::vec2 pos = transform2D.GetPosition();
-        transform2D.SetPosition(glm::vec2(pos.x, -windowManager->GetHeight() * 0.5f + colliderHalfSize.y));
+
+        if (pos.y + colliderHalfSize.y > boundaryMax.y) // top
+        {
+            transform2D.SetPosition(glm::vec2(pos.x, boundaryMax.y - colliderHalfSize.y));
+        }
+        else if (pos.y - colliderHalfSize.y < boundaryMin.y) // bot
+        {
+            transform2D.SetPosition(glm::vec2(pos.x, boundaryMin.y + colliderHalfSize.y));
+        }
     }
 
     if (spriteAnimator && engineContext.inputManager->IsKeyPressed(KEY_A))
@@ -104,8 +112,6 @@ void RealPlayer::Update(float dt, const EngineContext& engineContext)
 
         spriteAnimator->PlayClip("[Clip]RunningFront");
     }
-
-
 
     if (spriteAnimator && checkIdle && !checkIdle_prevFrame)
     {
