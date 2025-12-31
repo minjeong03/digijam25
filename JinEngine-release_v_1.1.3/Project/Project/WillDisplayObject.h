@@ -1,11 +1,10 @@
 #pragma once
-#include "ObjectManager.h"
-#include "Engine.h"
+#include "GameObject.h"
+#include "TextObject.h"
 
-class RealPlayer : public GameObject
+class WillDisplayObject : public GameObject
 {
 public:
-    RealPlayer(const glm::vec2& boundaryMin, const glm::vec2& boundaryMax);
     void Init(const EngineContext& engineContext) override;
     void LateInit(const EngineContext& engineContext) override;
     void Update(float dt, const EngineContext& engineContext) override;
@@ -13,12 +12,7 @@ public:
     void Free(const EngineContext& engineContext) override;
     void LateFree(const EngineContext& engineContext) override;
     void OnCollision(Object* other) override;
-    bool CheckIdle();
-private:  
-    WindowManager* windowManager;
-    bool checkIdle = true;
-    bool checkIdle_prevFrame = false;
-    glm::vec2 boundaryMin;
-    glm::vec2 boundaryMax;
-};
 
+private:
+    TextObject* textObject;
+};

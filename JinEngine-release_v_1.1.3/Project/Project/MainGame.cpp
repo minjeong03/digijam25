@@ -2,6 +2,7 @@
 #include "BulletObject.h"
 #include "MainGameUtils.h"
 #include "WallObject.h"
+#include "WillDisplayObject.h"
 
 // temp code below
 #include <fstream>
@@ -10,10 +11,12 @@ void MainGame::Load(const EngineContext& engineContext)
 {
 	RenderManager* rm = engineContext.renderManager;
 	rm->RegisterTexture("[Texture]MainCharacter", "Textures/MainCharacter/prototype_character.png");
+	rm->RegisterTexture("[Texture]WillBackground", "Textures/whitebox.png");
 	rm->RegisterSpriteSheet("[SpriteSheet]MainCharacter", "[Texture]MainCharacter", 32, 32);
 
 	rm->RegisterTexture("[Texture]BulletBackground", "Textures/leaf.png"); 
 	rm->RegisterMaterial("[Material]Bullet", "[EngineShader]default_texture", { {"u_Texture","[Texture]BulletBackground"} });
+	rm->RegisterMaterial("[Material]WillDisplay", "[EngineShader]default_texture", { {"u_Texture","[Texture]WillBackground"} });
 
 
 	SoundManager* sm = engineContext.soundManager;
@@ -26,7 +29,17 @@ void MainGame::Init(const EngineContext& engineContext)
 {
 	LoadConfigFromFile();
 
-	player = static_cast<RealPlayer*>(objectManager.AddObject(std::make_unique<RealPlayer>(), "[Object]player"));
+
+	elapsedTime = 0;
+	float borderSize = 10;
+	float posOffset = 100;
+	const float windowWidthHalf = engineContext.windowManager->GetWidth() * 0.5f;
+	const float windowHeightHalf = engineContext.windowManager->GetHeight() * 0.5f;
+	float posRight = windowWidthHalf + borderSize * 0.5f;
+	float posTop = windowHeightHalf + borderSize * 0.5f;
+	float willDisplayHeight = 200;
+
+	player = static_cast<RealPlayer*>(objectManager.AddObject(std::make_unique<RealPlayer>(glm::vec2(-windowWidthHalf, -windowHeightHalf), glm::vec2(windowWidthHalf, windowHeightHalf-willDisplayHeight)), "[Object]player"));
 	player->SetRenderLayer("[Layer]Player");
 	player->GetTransform2D().SetDepth(00.0f);
 	player->GetTransform2D().SetPosition(glm::vec2(0, 0));
@@ -35,18 +48,9 @@ void MainGame::Init(const EngineContext& engineContext)
 
 	engineContext.windowManager->SetCursorVisible(true);
 
-
-	elapsedTime = 0;
-	float borderSize = 10;
-	float posOffset = 100;
-	float posLeft = -(engineContext.windowManager->GetWidth() + borderSize) * 0.5f;
-	float posRight = (engineContext.windowManager->GetWidth() + borderSize) * 0.5f;
-	float posTop = (engineContext.windowManager->GetHeight() + borderSize) * 0.5f ;
-	float posBot = -(engineContext.windowManager->GetHeight() + borderSize) * 0.5f;
-
 	WallObject* wallLeft = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
 	wallLeft->GetTransform2D().SetScale(glm::vec2(borderSize, engineContext.windowManager->GetHeight() + borderSize));
-	wallLeft->GetTransform2D().SetPosition(glm::vec2(posLeft - posOffset, 0));
+	wallLeft->GetTransform2D().SetPosition(glm::vec2(-posRight - posOffset, 0));
 
 	WallObject* wallRight = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
 	wallRight->GetTransform2D().SetScale(glm::vec2(borderSize, engineContext.windowManager->GetHeight() + borderSize));
@@ -54,11 +58,15 @@ void MainGame::Init(const EngineContext& engineContext)
 	
 	WallObject* wallTop = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
 	wallTop->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth() + borderSize, borderSize));
-	wallTop->GetTransform2D().SetPosition(glm::vec2(0, posTop + posOffset));
+	wallTop->GetTransform2D().SetPosition(glm::vec2(0, posTop + posOffset - willDisplayHeight));
 
 	WallObject* wallBot = static_cast<WallObject*>(objectManager.AddObject(std::make_unique<WallObject>(), "[Object]wall"));
 	wallBot->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth() + borderSize, borderSize));
-	wallBot->GetTransform2D().SetPosition(glm::vec2(0, posBot - posOffset));
+	wallBot->GetTransform2D().SetPosition(glm::vec2(0, -posTop - posOffset));
+
+	WillDisplayObject* willDisplayObject = static_cast<WillDisplayObject*>(objectManager.AddObject(std::make_unique<WillDisplayObject>(), "[Object]WillDisplay"));
+	willDisplayObject->GetTransform2D().SetScale(glm::vec2(engineContext.windowManager->GetWidth(), willDisplayHeight));
+	willDisplayObject->GetTransform2D().SetPosition(glm::vec2(0, (engineContext.windowManager->GetHeight() - willDisplayHeight) *0.5f));
 }
 
 void MainGame::LateInit(const EngineContext& engineContext)
@@ -130,6 +138,8 @@ void MainGame::LoadConfigFromFile()
 	inputFile >> str >> configLoadedFromFile.SpawnInterval;
 	inputFile >> str >> configLoadedFromFile.AngleVariance;
 	inputFile >> str >> configLoadedFromFile.WordDataFilepath;
+	inputFile >> str >> configLoadedFromFile.StartAngle;
+	inputFile >> str >> configLoadedFromFile.EndAngle;
 
 	inputFile.close();
 }

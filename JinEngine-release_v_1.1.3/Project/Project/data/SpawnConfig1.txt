@@ -5,3 +5,5 @@ PatternAngleSpacing 30
 SpawnInterval 0.8
 AngleVariance 10
 WordDataFilepath data/Noun.txt
+StartAngle 0
+EndAngle 0
