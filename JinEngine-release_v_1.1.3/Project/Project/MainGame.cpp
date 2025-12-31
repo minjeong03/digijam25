@@ -124,7 +124,7 @@ void MainGame::Unload(const EngineContext& engineContext)
 
 void MainGame::LoadConfigFromFile()
 {
-	std::ifstream inputFile("data/SpawnConfig.txt");
+	std::ifstream inputFile("data/ArcSpawnConfig.txt");
 
 	if (!inputFile.is_open()) {
 		return;

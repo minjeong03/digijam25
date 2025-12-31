@@ -10,7 +10,7 @@ void RealPlayer::Init(const EngineContext& engineContext)
 {
     windowManager = engineContext.windowManager;
     transform2D.SetScale(glm::vec2(60.f));
-    transform2D.SetPosition(glm::vec2(-300, 0));
+    transform2D.SetPosition(glm::vec2(0, -100));
     SetMesh(engineContext, "[EngineMesh]default");
     SetMaterial(engineContext, "[Material]Animation");
     SpriteSheet* sheet = engineContext.renderManager->GetSpriteSheetByTag("[SpriteSheet]MainCharacter");
