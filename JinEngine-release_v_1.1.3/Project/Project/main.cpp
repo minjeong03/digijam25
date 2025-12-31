@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
         JIN_ERR("Engine initialization failed.");
         return -1;
     }
-    jinEngine.RenderDebugDraws(true);
+    jinEngine.RenderDebugDraws(false);
    //jinEngine.GetEngineContext().windowManager->RestrictResizing(true);
 
 

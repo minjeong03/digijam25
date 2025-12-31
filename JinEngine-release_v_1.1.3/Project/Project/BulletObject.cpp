@@ -24,6 +24,7 @@ std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]de
 	BulletTextObject->SetRenderLayer("[Layer]UIText");
 	BulletTextObject->GetTransform2D().SetPosition(GetWorldPosition());
 	BulletTextObject->GetTransform2D().SetScale({ 0.3f,0.3f });
+	BulletTextObject->SetColor({0,0,0,1});
 
 	auto collider = std::make_unique<AABBCollider>(this, glm::vec2(1.0, 1.0));
 	collider->SetUseTransformScale(false);
@@ -32,6 +33,7 @@ std::make_unique<TextObject>(engineContext.renderManager->GetFontByTag("[Font]de
 	SetCollision(engineContext.stateManager->GetCurrentState()->GetObjectManager(), 
 		"[CollisionTag]bullet", { "[CollisionTag]player"});
 
+	transform2D.SetScale(BulletTextObject->GetWorldScale() * 1.3f);
 }
 
 void BulletObject::LateInit(const EngineContext& engineContext)

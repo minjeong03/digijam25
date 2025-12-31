@@ -16,7 +16,7 @@ void MainGame::Load(const EngineContext& engineContext)
 	rm->RegisterTexture("[Texture]WillBackground", "Textures/whitebox.png");
 	rm->RegisterSpriteSheet("[SpriteSheet]MainCharacter", "[Texture]MainCharacter", 32, 32);
 
-	rm->RegisterTexture("[Texture]BulletBackground", "Textures/leaf.png"); 
+	rm->RegisterTexture("[Texture]BulletBackground", "Textures/bluebox.png"); 
 	rm->RegisterMaterial("[Material]Bullet", "[EngineShader]default_texture", { {"u_Texture","[Texture]BulletBackground"} });
 	rm->RegisterMaterial("[Material]WillDisplay", "[EngineShader]default_texture", { {"u_Texture","[Texture]WillBackground"} });
 
@@ -28,7 +28,7 @@ void MainGame::Load(const EngineContext& engineContext)
 
 	patterns.push_back(LoadPatternsFromFile("data/Patterns/p1.txt"));
 	patterns.push_back(LoadPatternsFromFile("data/Patterns/p2.txt"));
-	//patterns.push_back(LoadPatternsFromFile("data/Patterns/p3.txt"));
+	patterns.push_back(LoadPatternsFromFile("data/Patterns/p3.txt"));
 }
 
 void MainGame::Init(const EngineContext& engineContext)
