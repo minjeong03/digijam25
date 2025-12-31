@@ -11,4 +11,4 @@ StartAngle 265
 EndAngle 275
 BulletSpeed 200
 ReadPos? 1
-InitPos 400 1000
+InitPos 960 540
